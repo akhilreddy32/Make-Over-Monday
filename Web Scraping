@@ -1,0 +1,57 @@
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+def get_country_population_data(country_url):
+    # Send a GET request to the country's page
+    response = requests.get(country_url)
+
+    # Parse the HTML content of the page
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Find the table containing the population data
+    table = soup.find('table', {'class': 'table table-striped table-bordered table-hover table-condensed table-list'})
+
+    # Extract the headers of the table
+    headers = [header.text for header in table.find_all('th')]
+
+    # Extract the rows of the table
+    rows = []
+    for row in table.find_all('tr')[1:]:  # Skip the first row, which is the header row
+        cells = [cell.text.strip() for cell in row.find_all('td')]
+        rows.append(cells)
+
+    # Create a DataFrame from the extracted data
+    df = pd.DataFrame(rows, columns=headers)
+
+    return df
+
+# URL of the main page
+main_url = 'https://www.worldometers.info/world-population/population-by-country/'
+
+# Send a GET request to the main page
+response = requests.get(main_url)
+
+# Parse the HTML content of the page
+soup = BeautifulSoup(response.text, 'html.parser')
+
+# Find the table containing the country links
+table = soup.find('table', {'id': 'example2'})
+
+# Extract the country names and URLs
+countries_data = [(row.find('a').text, f"https://www.worldometers.info{row.find('a')['href']}") for row in table.find_all('tr')[1:]]
+
+# Create a DataFrame to store the world population data
+world_population_df = pd.DataFrame()
+
+# Iterate through the countries and scrape data for each country
+for country_name, country_url in countries_data:
+    country_df = get_country_population_data(country_url)
+    # Save the country's DataFrame as a CSV file
+    file_name = f"{country_name.replace(' ', '_').replace('.', '')}.csv"
+    country_df.to_csv(file_name, index=False)
+    # Add the country's data to the world population DataFrame
+    world_population_df = pd.concat([world_population_df, country_df], ignore_index=True)
+
+# Save the world population DataFrame as a CSV file
+world_population_df.to_csv('World_Population.csv', index=False)
