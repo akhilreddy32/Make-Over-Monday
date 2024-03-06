@@ -7,10 +7,6 @@ Make Over Monday is a weekly data visualization challenge where participants are
 
 **Repository Structure**
 
-/data: Contains the datasets used for each week's challenge.
-
-/visualizations: Holds the visualizations created for each challenge, including images and interactive dashboards.
-
 /code: Stores any code files (e.g., Python, R, or SQL scripts) used for data preparation or visualization.
 
 Weekly Submissions
