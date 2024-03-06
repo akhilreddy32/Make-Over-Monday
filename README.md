@@ -13,7 +13,7 @@ Weekly Submissions
 Each week, I will update this repository with the latest submission, including the dataset, visualization, and any relevant code or notes. Feel free to explore my work and provide feedback or suggestions!
 
 Connect with Me
-[Linkedin]([url](https://www.linkedin.com/in/aenuguakhilreddy/)https://www.linkedin.com/in/aenuguakhilreddy/)
+LinkedIn : https://www.linkedin.com/in/aenuguakhilreddy/
 Email : aenugu.akhilreddy@gmail.com
 
 Thank you for visiting my Make Over Monday repository. Let's embark on this journey of data exploration and storytelling together!
